@@ -1,0 +1,59 @@
+---
+
+# the unique infraid for the cluster.
+# makes it easier to idnetify related network resources in openstack 
+# when you have more than one cluster in the managed system.
+# its set as XXXXX as a placeholder until it is generated during OCP installation.
+# then automatically updates in ansible
+
+hmc_username: ''
+hmc_password: ''
+hmc_hostname: ''
+
+
+# infra nodes hostnames.. should be same as in the inventory
+bastion_hostname: "bastion1"
+dns_hostname: "dns1"
+haproxy1_hostname: "haproxy1"
+haproxy2_hostname: "haproxy2"
+dhcpd_hostname: "{{ bastion_hostname }}"
+
+# named and dhcpd IP addresses
+bind_ocp_subnet: ""
+ocp_reverse_subnet: ""
+subnet: ""
+dhcpd_subnet: ""
+dhcpd_netmask: ""
+router: ""
+chrony_network: '{{ subnet }}'
+
+# this is a VIP address so can be assigned and locked in PowerVC
+loadbalancer: ''
+vip_address: ''
+
+ocp_cluster_basedomain: ""
+ocp_cluster_id: ""
+ocp_cluster_domain: "{{ ocp_cluster_id + '.' + ocp_cluster_basedomain}}"
+
+
+
+workers_list:
+        - worker_name: "{{ infraid }}-worker-0"
+        - worker_name: "{{ infraid }}-worker-1"
+        - worker_name: "{{ infraid }}-worker-2"
+        - worker_name: "{{ infraid }}-worker-3"
+        - worker_name: "{{ infraid }}-worker-4"
+
+masters_list:
+        - master_name: "{{ infraid }}-master-0"
+        - master_name: "{{ infraid }}-master-1"
+        - master_name: "{{ infraid }}-master-2"
+
+storage_workers:
+        - worker_name: "{{ infraid }}-worker-2"
+          odfvol: "odf-vol-1"
+        - worker_name: "{{ infraid }}-worker-3"
+          odfvol: "odf-vol-2"
+        - worker_name: "{{ infraid }}-worker-4"
+          odfvol: "odf-vol-3"
+

@@ -1,0 +1,67 @@
+---
+nfs_package_list:
+   - package: nfs-utils
+   - package: policycoreutils
+
+
+ocp_ports:
+   - name: metrics
+     port: 1936
+     proto: tcp
+     state: enabled
+     zone: public
+   - name: host_services_tcp
+     port: 9000-9999
+     proto: tcp
+     state: enabled
+     zone: public
+   - name: kubernetes
+     port: 10250-10259
+     proto: tcp
+     state: enabled
+     zone: public
+   - name: openshift_sdn
+     port: 10256
+     proto: tcp
+     state: enabled
+     zone: public
+   - name: vxlan_geneve_1
+     port: 4789
+     proto: udp
+     state: enabled
+     zone: public
+   - name: vxlan-geneve_2
+     port: 6081
+     proto: udp
+     state: enabled
+     zone: public
+   - name: host_services_udp
+     port: 9000-9999
+     proto: udp
+     state: enabled
+     zone: public
+   - name: kubernetes_node_port_tcp
+     port: 30000-32767
+     proto: tcp
+     state: enabled
+     zone: public
+   - name: kubernetes_node_port_udp
+     port: 30000-32767
+     proto: udp
+     state: enabled
+     zone: public
+   - name: etcd_peer_ports
+     port: 2379-2380
+     proto: tcp
+     state: enabled
+     zone: public
+   - name: kubernetes_api
+     port: 6443
+     proto: tcp
+     state: enabled
+     zone: public
+
+
+mpath_dev: "mpathc"
+nfs_disk_size: "300"
+

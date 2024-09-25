@@ -1,0 +1,22 @@
+---
+
+keepalived_version: 2.0.20
+keepalived_tar: keepalived-{{ keepalived_version }}.tar.gz
+keepalived_download_url: https://www.keepalived.org/software/{{ keepalived_tar }}
+
+keepalived_packages:
+   - package: gcc 
+   - package: openssl-devel
+   - package: make
+
+haproxy_port_list:
+   - haproxy_port: "22623/tcp"
+   - haproxy_port: "6443/tcp"
+   - haproxy_port: "443/tcp" 
+   - haproxy_port: "80/tcp"
+
+master_server: "haproxy1"
+backup_server: "haproxy2"
+
+
+

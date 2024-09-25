@@ -1,0 +1,131 @@
+---
+- name: PowerVC build of the bastion node
+  gather_facts: false
+  hosts: bastion
+  become: true
+
+  tasks:
+   - name: Create bastion server
+     ansible.builtin.import_role:
+       name: sbm.powervc_ocp.powervcvm
+     vars: 
+       vm_name: "{{ bastion_hostname }}"
+     delegate_to: localhost
+     when: vm_name in groups['bastion']
+
+   - name: allocate openstack storage
+     ansible.builtin.import_role:
+       name: sbm.powervc_ocp.os_add_volumes
+     vars:
+       vm_name: "{{ bastion_hostname }}"
+       os_volume: ocp_nfs_vol
+     delegate_to: localhost
+     when: vm_name in groups['bastion']
+   
+
+- name: PowerVC build of HAProxy node1
+  gather_facts: false
+  hosts: balancer1
+  become: true
+
+  tasks:
+   - name: Create haproxy servers
+     ansible.builtin.import_role:
+       name: sbm.powervc_ocp.powervcvm
+     vars:
+       vm_name: "{{ haproxy1_hostname }}"
+     delegate_to: localhost
+     when: vm_name in groups['balancers']
+
+
+- name: PowerVC build of HAProxy node2
+  gather_facts: false
+  hosts: balancer2
+  become: true
+
+  tasks:
+   - name: Create haproxy servers
+     ansible.builtin.import_role:
+       name: sbm.powervc_ocp.powervcvm
+     vars:
+       vm_name: "{{ haproxy2_hostname }}"
+     delegate_to: localhost
+     when: vm_name in groups['balancers']
+
+
+- name: PowerVC build of a DNS node
+  gather_facts: false
+  hosts: named
+  become: true
+
+  tasks:
+   - name: Create named server
+     ansible.builtin.import_role:
+       name: sbm.powervc_ocp.powervcvm
+     vars:
+       vm_name: "{{ dns_hostname }}"
+     delegate_to: localhost
+     when: vm_name in groups['named']
+
+
+- name: PowerVC Build of an OpenShift Cluster
+  gather_facts: true
+  hosts: all
+  become: true
+
+  tasks:
+   - name: configure the bastion node
+     ansible.builtin.import_role:
+       name: sbm.powervc_ocp.bastion
+     when: ansible_host in groups['bastion']
+
+   - name: set the infra nodes ip facts
+     ansible.builtin.import_role:
+       name: sbm.powervc_ocp.os_set_infra_ips
+     delegate_to: "{{ bastion_hostname }}"
+     run_once: true
+
+   - name: create infraid and ignition files
+     ansible.builtin.import_role:
+       name: sbm.powervc_ocp.ocp_install
+     when: ansible_host in groups['bastion']
+
+   - name: Create all cluster nodes
+     ansible.builtin.import_role:
+       name: sbm.powervc_ocp.ocp_nodes_create
+     delegate_to: "{{ bastion_hostname }}" 
+     run_once: true
+
+   - name: set all IP and MAC facts
+     ansible.builtin.import_role:
+       name: sbm.powervc_ocp.os_set_data
+     delegate_to: "{{ bastion_hostname }}"
+     run_once: true
+
+   - name : Implement DNS
+     ansible.builtin.import_role:
+       name: sbm.powervc_ocp.named
+     when: ansible_host in groups['named']
+
+   - name : Implement LoadBalancing
+     ansible.builtin.import_role:
+       name: sbm.powervc_ocp.balancer
+     vars:
+       master_server: "{{ haproxy1_hostname }}"
+       backup_server: "{{ haproxy2_hostname }}"
+     when: ansible_host in groups['balancers']
+
+   - name: deploy the dhcpd server
+     ansible.builtin.import_role:
+       name: sbm.powervc_ocp.dhcpdsrv
+     when: ansible_host in groups['bastion']
+
+   - name: check services and chrony
+     ansible.builtin.import_role:
+       name: sbm.powervc_ocp.ocp_check
+
+   - name: deploy the RedHat OpenShift Cluster
+     ansible.builtin.import_role:
+       name: sbm.powervc_ocp.ocp_bootstrap
+     delegate_to: "{{ bastion_hostname }}"
+     run_once: true
