@@ -1,0 +1,11 @@
+[bastion]
+bastion2
+[balancer1]
+haproxy3
+[balancer2]
+haproxy3
+[balancers]
+haproxy3
+haproxy4
+[named]
+dns2
