@@ -121,7 +121,12 @@ Once you have all the above set up in PowerVC, you can populate the group_vars/a
 
 populate these files;
 
-group_vars/all/infra.yml  and group_vars/all/os_powervc.yml need to be populated with your values.
+group_vars/all/infra.yml 
+group_vars/all/os_powervc.yml
+group_vars/bastion/ocp_vars.yml
+
+All need to be populated with your values.
+
 You will need an HMC user, with the ability to stop/start VMs.
 The PowerVC project user with an admin role.
 update the inventory for hostnames set in infra.yml.
