@@ -122,7 +122,9 @@ Once you have all the above set up in PowerVC, you can populate the group_vars/a
 populate these files;
 
 group_vars/all/infra.yml 
-group_vars/all/os_powervc.yml
+
+group_vars/all/os_powervc.yml 
+
 group_vars/bastion/ocp_vars.yml
 
 All need to be populated with your values.
