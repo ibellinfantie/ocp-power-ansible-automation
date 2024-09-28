@@ -1,4 +1,4 @@
-## build_ocp
+## sbm_ocp_on_power
 
 This project will implement an OpenShift Cluster on IBM Power. 
 At the end you will be able to login into the cluster with details provided from
