@@ -2,7 +2,7 @@
 
 os_identity_api_version: 3
 os_auth_url: ""
-os_cert: ""
+os_cert: "/etc/pki/tls/certs/powervc.crt"   # the container will expect this path
 os_region_name: "RegionOne"
 os_project_domain_name: "Default"
 os_project_name: ''

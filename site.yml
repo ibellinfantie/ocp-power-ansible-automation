@@ -18,7 +18,7 @@
        name: sbm.powervc_ocp.os_add_volumes
      vars:
        vm_name: "{{ bastion_hostname }}"
-       os_volume: ocp_nfs_vol
+       os_volume: "{{ nfs_vol_name }}"
      delegate_to: localhost
      when: vm_name in groups['bastion']
    

@@ -62,6 +62,3 @@ ocp_ports:
      zone: public
 
 
-mpath_dev: "mpathc"
-nfs_disk_size: "300"
-

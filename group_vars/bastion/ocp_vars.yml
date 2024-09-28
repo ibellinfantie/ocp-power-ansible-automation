@@ -1,5 +1,5 @@
 ---
-chrony_network: '{{ subnet }}'
+chrony_network: '{{ dhcpd_subnet }}'
 ocp_version: 4.12
 ocp_installer: "openshift-install-linux-4.12.0.tar.gz"
 ocp_installer_url: "https://mirror.openshift.com/pub/openshift-v4/ppc64le/clients/ocp/4.12.0/openshift-install-linux-4.12.0.tar.gz"

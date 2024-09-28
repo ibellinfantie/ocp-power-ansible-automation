@@ -6,34 +6,40 @@
 # its set as XXXXX as a placeholder until it is generated during OCP installation.
 # then automatically updates in ansible
 
-hmc_username: ''
+hmc_username: ''      # the username created in the HMC with the ability to stop/start partitions
 hmc_password: ''
 hmc_hostname: ''
 
 
-# infra nodes hostnames.. should be same as in the inventory
-bastion_hostname: "bastion1"
-dns_hostname: "dns1"
-haproxy1_hostname: "haproxy1"
-haproxy2_hostname: "haproxy2"
+# infra nodes hostnames.. should be the same as in the inventory
+# the bootstrap server hostname will be generated as {{ infraid }}-bootstrap
+# All IP addresses are dynamically obtained from the PowerVC DHCP IP pool in the project
+#
+bastion_hostname: ""
+dns_hostname: ""
+haproxy1_hostname: ""
+haproxy2_hostname: ""
 dhcpd_hostname: "{{ bastion_hostname }}"
 
+master_server: "{{ haproxy1_hostname }}"      # haproxy first server
+backup_server: "{{ haproxy2_hostname }}"      # haproxy second server
+
 # named and dhcpd IP addresses
-bind_ocp_subnet: ""
+bind_ocp_subnet: ""            # example format 192.168.100.1/24
 ocp_reverse_subnet: ""
-subnet: ""
-dhcpd_subnet: ""
+dhcpd_subnet: ""               # example format 192.168.100.0
 dhcpd_netmask: ""
 router: ""
-chrony_network: '{{ subnet }}'
+chrony_network: '{{ dhcpd_subnet }}'
 
 # this is a VIP address so can be assigned and locked in PowerVC
 loadbalancer: ''
-vip_address: ''
+vip_address: "{{ loadbalancer }}"
 
 ocp_cluster_basedomain: ""
 ocp_cluster_id: ""
 ocp_cluster_domain: "{{ ocp_cluster_id + '.' + ocp_cluster_basedomain}}"
+
 
 
 
@@ -56,4 +62,8 @@ storage_workers:
           odfvol: "odf-vol-2"
         - worker_name: "{{ infraid }}-worker-4"
           odfvol: "odf-vol-3"
+
+mpath_dev: "mpathc"
+nfs_disk_size: "300"
+nfs_vol_name: ""      # create this volume name in powervc
 

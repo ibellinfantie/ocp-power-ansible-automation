@@ -15,8 +15,6 @@ haproxy_port_list:
    - haproxy_port: "443/tcp" 
    - haproxy_port: "80/tcp"
 
-master_server: "haproxy1"
-backup_server: "haproxy2"
 
 
 
