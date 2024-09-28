@@ -134,8 +134,6 @@ The PowerVC project user with an admin role.
 update the inventory for hostnames set in infra.yml.
 Do not change the host groups as these natch for site.yml, just update hostnames in the groups.
 
-Use group_vars/balancers/haproxy.yml to set HAProxy values for the keepalived version downloaded and the selection of master and secondary in the HAProxy cluster.
-
 Use group_vars/bastion/ocp_vars.yml to set your redhat pull secret and version of the OCP you want to install. The bastion root ssh key is dynamically provisioned so you do not need to provide this.
 
 
@@ -154,6 +152,7 @@ The whole install of openshift will be performed by running the below command fr
 
 ansible-navigator --eei ansiblehub.sbm.com.sa/ee-openstacksdk:latest run site.yml  -m stdout
 
+NB. Details on how to build the eei ee-openstacksdk will be available shortly.
 
 The ansible execution environment 
 
