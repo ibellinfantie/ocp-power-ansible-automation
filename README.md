@@ -122,10 +122,20 @@ Once you have all the above set up in PowerVC, you can populate the group_vars/a
 populate these files;
 
 group_vars/all/infra.yml  and group_vars/all/os_powervc.yml need to be populated with your values.
+You will need an HMC user, with the ability to stop/start VMs.
+The PowerVC project user with an admin role.
+update the inventory for hostnames set in infra.yml.
+Do not change the host groups as these natch for site.yml, just update hostnames in the groups.
 
 Use group_vars/balancers/haproxy.yml to set HAProxy values for the keepalived version downloaded and the selection of master and secondary in the HAProxy cluster.
 
 Use group_vars/bastion/ocp_vars.yml to set your redhat pull secret and version of the OCP you want to install. The bastion root ssh key is dynamically provisioned so you do not need to provide this.
+
+
+unfortunately, the pause module does not work when run from roles in an ansible collection.
+Pausing for 120 seconds
+(ctrl+C then 'C' = continue early, ctrl+C then 'A' = abort)
+You will see some occurances of this to give time for processes to complete. You can allow these to expire or use it as a break point to ctrl+c from the play. Fix the problem and run the play again.
 
 ### Inventory
 
