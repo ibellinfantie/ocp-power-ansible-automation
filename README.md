@@ -1,6 +1,6 @@
-## sbm_ocp_on_power
+### ocp-power-ansible-automation
 
-This project will implement an OpenShift Cluster on IBM Power. 
+This project will implement an OpenShift UPI Cluster on IBM Power using PowerVC and Ansible Automation. 
 At the end you will be able to login into the cluster with details provided from
  /usr/local/bin/openshift-install --log-level debug wait-for install-complete
 However , no storage classes or htpasswd or image-registry are configured. This is to provde the base requirements for openshift on Power that will apply to all user requirements.
