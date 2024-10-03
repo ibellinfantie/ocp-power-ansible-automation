@@ -3,11 +3,19 @@
 This project will implement an OpenShift UPI Cluster on IBM Power using PowerVC and Ansible Automation. 
 At the end you will be able to login into the cluster with details provided from
  /usr/local/bin/openshift-install --log-level debug wait-for install-complete
-However , no storage classes or htpasswd or image-registry are configured. This is to provde the base requirements for openshift on Power that will apply to all user requirements.
+However , no storage classes or htpasswd or image-registry are configured. 
+This is to provde the base requirements for openshift on Power that will apply to all user requirements.
 
+This solution is greatly simplified without the need for Terraform and complied dependencies.
+The solution architecure is as below;
+
+![ solution architecure ](https://github.com/ibellinfantie/build_ocp/blob/main/solution-architecture.png)
+
+		
 ### Flow of roles
-The play calls a number of roles which are included in the ansible execution environment collection sbm.powervc_ocp.
+The play calls a number of roles which are included in the custom ansible execution environment collection sbm.powervc_ocp.
 There is some setup required in PowerVC, but once these resources are created , you wil not need to do this again unless you need a new version of coreOS and need to create a new image.
+You can create multiple clusters on the same managed system using the same UUIDs of resources created in PowerVC.
 The other requirements are easily dynamically updated in PowerVC if required to change.
 Below is the flow of the roles and order of execution.
 
@@ -18,9 +26,11 @@ The project pre-requisites are;
 ### IBM Power Systems.
 
 This project should work on all versions of IBM Power from Power8 upwards.
-However, only currently tested an OpenShift install on Power8 with OCP 4.12.0 . Will not work with the latest 4.12 or 4.12.30 on Power8.
-Can work for versions of OCP just above 4.12.0 but not as yet tested.
+However, only currently tested an OpenShift install on Power8 with OCP 4.12.0 . 
+Will not work with the latest version of 4.12 or 4.12.30 on Power8.
+Can work for versions of OCP just above 4.12.0 but not as yet tested all.
 Please check on https://mirror.openshift.com/pub/openshift-v4/ppc64le/dependencies/rhcos/  for coreOS versions
+Deployments on Power9 and Power10 will be confirmed shortly.
 
 ### IBM PowerVC
 
@@ -138,7 +148,7 @@ Do not change the host groups as these natch for site.yml, just update hostnames
 Use group_vars/bastion/ocp_vars.yml to set your redhat pull secret and version of the OCP you want to install. The bastion root ssh key is dynamically provisioned so you do not need to provide this.
 
 
-unfortunately, the pause module does not work when run from roles in an ansible collection.
+Unfortunately, the pause module does not work when run from roles in an ansible collection.
 Pausing for 120 seconds
 (ctrl+C then 'C' = continue early, ctrl+C then 'A' = abort)
 You will see some occurances of this to give time for processes to complete. You can allow these to expire or use it as a break point to ctrl+c from the play. Fix the problem and run the play again.
@@ -146,6 +156,34 @@ You will see some occurances of this to give time for processes to complete. You
 ### Inventory
 
 Update the inventory for the hostnames you want for the infratrsucture nodes
+Ensure these are the same hostnames as in the group_vars/all/infra.yml
+
+### Ansible Execution Environment Image
+
+requirements.yml
+---
+collections:
+ - name: openstack.cloud
+ - name: sbm.powervc_ocp
+ - name: ansible.posix
+ - name: ansible.utils
+ - name: ansible.netcommon
+ - name: community.general
+ - name: ibm.power_hmc
+
+requirements.txt
+openstackclient
+openstacksdk
+
+bindep.txt
+libxml2-devel
+libxslt-devel
+python3-devel
+gcc
+python3-lxml
+
+
+
 
 ### Running the play
 
@@ -153,22 +191,21 @@ The whole install of openshift will be performed by running the below command fr
 
 ansible-navigator --eei ansiblehub.sbm.com.sa/ee-openstacksdk:latest run site.yml  -m stdout
 
-NB. Details on how to build the eei ee-openstacksdk will be available shortly.
-
 The ansible execution environment 
 
 When done, ssh to the bastion from the ansible user. 
 sudo -i to root , 
 export KUBECONFIG=/opt/install/auth/kubeconfig 
 and you can run oc commands and access nodes
-with core@nodename .
+with core@"$infradid-cluster-domain" from the bastion.
  
 There is no automatic CSR approval for the workers, so approve the certs manually when available.
 
 Running the play a second time after the cluster is built and up and running, will shutdown and restart the cluster.
 The cluster will be available again after this.
 If you lose network connection or need to redo the cluster within 24 hours. You can delete the masters and workers , and re-run the play. 
-The infra nodes can remain, but will use the generated ignitions.
+The infra nodes can remain, and will use the generated ignitions.
 If you want to update the certificates and get a new infraid for the ignitions, also delete the file /opt/install.tgz on the bastion and re-run the play. 
+You can delete all nodes and re-run the play for the configured environment variables for a new build with a new infraid.
 
 
