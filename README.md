@@ -9,7 +9,7 @@ This is to provde the base requirements for openshift on Power that will apply t
 This solution is greatly simplified without the need for Terraform and complied dependencies.
 The solution architecure is as below;
 
-![ solution architecure ](https://github.com/ibellinfantie/build_ocp/blob/main/solution-architecture.png)
+![ solution architecure ](https://github.com/ibellinfantie/ocp-power-ansible-automation/blob/main/solution_architecture.png)
 
 		
 ### Flow of roles
@@ -19,7 +19,7 @@ You can create multiple clusters on the same managed system using the same UUIDs
 The other requirements are easily dynamically updated in PowerVC if required to change.
 Below is the flow of the roles and order of execution.
 
-![ Roles workflow](https://github.com/ibellinfantie/build_ocp/blob/main/roles_workflow.png)
+![ Roles workflow](https://github.com/ibellinfantie/ocp-power-ansible-automation/blob/main/roles_workflow.png)
 
 The project pre-requisites are;
 
