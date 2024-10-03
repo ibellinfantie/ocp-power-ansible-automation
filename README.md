@@ -6,7 +6,7 @@ At the end you will be able to login into the cluster with details provided from
 However , no storage classes or htpasswd or image-registry are configured. 
 This is to provde the base requirements for openshift on Power that will apply to all user requirements.
 
-This solution is greatly simplified without the need for Terraform and complied dependencies.
+This solution is greatly simplified without the need for Terraform and compiled dependencies.
 The solution architecure is as below;
 
 ![ solution architecure ](https://github.com/ibellinfantie/ocp-power-ansible-automation/blob/main/solution_architecture.png)
