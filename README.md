@@ -26,11 +26,9 @@ The project pre-requisites are;
 ### IBM Power Systems.
 
 This project should work on all versions of IBM Power from Power8 upwards.
-However, only currently tested an OpenShift install on Power8 with OCP 4.12.0 . 
-Will not work with the latest version of 4.12 or 4.12.30 on Power8.
-Can work for versions of OCP just above 4.12.0 but not as yet tested all.
-Please check on https://mirror.openshift.com/pub/openshift-v4/ppc64le/dependencies/rhcos/  for coreOS versions
-Deployments on Power9 and Power10 will be confirmed shortly.
+Currently tested an OpenShift install on Power8 with OCP 4.12.0 - 4.12.10. 
+Please check on https://mirror.openshift.com/pub/openshift-v4/ppc64le/dependencies/rhcos/  for coreOSversions
+
 
 ### IBM PowerVC
 
