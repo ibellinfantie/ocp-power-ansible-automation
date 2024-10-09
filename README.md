@@ -151,6 +151,18 @@ Pausing for 120 seconds
 (ctrl+C then 'C' = continue early, ctrl+C then 'A' = abort)
 You will see some occurances of this to give time for processes to complete. You can allow these to expire or use it as a break point to ctrl+c from the play. Fix the problem and run the play again.
 
+The play creates 2 workers in the cluster. 
+workers_list:
+        - worker_name: "{{ infraid }}-worker-0"
+        - worker_name: "{{ infraid }}-worker-1"
+#        - worker_name: "{{ infraid }}-worker-2"
+#        - worker_name: "{{ infraid }}-worker-3"
+#        - worker_name: "{{ infraid }}-worker-4"
+
+
+uncomment the above 3 workers in group_vars/all/infra.yml to create 3 additional workers
+After the cluster has initialized with 2 workers, you will need to add the extra entries in dns, haproxy, dhcp manually to add the additional 3 workers.   
+
 ### Inventory
 
 Update the inventory for the hostnames you want for the infratrsucture nodes

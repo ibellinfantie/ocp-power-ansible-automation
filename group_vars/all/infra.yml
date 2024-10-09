@@ -46,9 +46,13 @@ ocp_cluster_domain: "{{ ocp_cluster_id + '.' + ocp_cluster_basedomain}}"
 workers_list:
         - worker_name: "{{ infraid }}-worker-0"
         - worker_name: "{{ infraid }}-worker-1"
-        - worker_name: "{{ infraid }}-worker-2"
-        - worker_name: "{{ infraid }}-worker-3"
-        - worker_name: "{{ infraid }}-worker-4"
+#        - worker_name: "{{ infraid }}-worker-2"
+#        - worker_name: "{{ infraid }}-worker-3"
+#        - worker_name: "{{ infraid }}-worker-4"
+#
+#
+#  uncomment the above 3 workers to create 3 additional workers 
+
 
 masters_list:
         - master_name: "{{ infraid }}-master-0"
