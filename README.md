@@ -160,6 +160,7 @@ workers_list:
         - worker_name: "{{ infraid }}-worker-4"
 
 
+
 uncomment the above 3 workers in group_vars/all/infra.yml to create 3 additional workers
 After the cluster has initialized with 2 workers, you will need to add the extra entries in dns, haproxy, dhcp manually to add the additional 3 workers.   
 
