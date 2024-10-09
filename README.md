@@ -154,14 +154,19 @@ You will see some occurances of this to give time for processes to complete. You
 The play creates 2 workers in the cluster. 
 workers_list:
         - worker_name: "{{ infraid }}-worker-0"
+
         - worker_name: "{{ infraid }}-worker-1"
+
         - worker_name: "{{ infraid }}-worker-2"
+
         - worker_name: "{{ infraid }}-worker-3"
+
         - worker_name: "{{ infraid }}-worker-4"
 
 
 
-uncomment the above 3 workers in group_vars/all/infra.yml to create 3 additional workers
+
+comment/uncomment the last 3 workers in group_vars/all/infra.yml to create or not create 3 additional workers
 After the cluster has initialized with 2 workers, you will need to add the extra entries in dns, haproxy, dhcp manually to add the additional 3 workers.   
 
 ### Inventory
