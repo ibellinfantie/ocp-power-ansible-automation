@@ -152,7 +152,9 @@ Pausing for 120 seconds
 You will see some occurances of this to give time for processes to complete. You can allow these to expire or use it as a break point to ctrl+c from the play. Fix the problem and run the play again.
 
 The play creates 2 workers in the cluster. 
+
 workers_list:
+
         - worker_name: "{{ infraid }}-worker-0"
 
         - worker_name: "{{ infraid }}-worker-1"
