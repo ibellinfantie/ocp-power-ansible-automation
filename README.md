@@ -155,9 +155,9 @@ The play creates 2 workers in the cluster.
 workers_list:
         - worker_name: "{{ infraid }}-worker-0"
         - worker_name: "{{ infraid }}-worker-1"
-#        - worker_name: "{{ infraid }}-worker-2"
-#        - worker_name: "{{ infraid }}-worker-3"
-#        - worker_name: "{{ infraid }}-worker-4"
+        - worker_name: "{{ infraid }}-worker-2"
+        - worker_name: "{{ infraid }}-worker-3"
+        - worker_name: "{{ infraid }}-worker-4"
 
 
 uncomment the above 3 workers in group_vars/all/infra.yml to create 3 additional workers
