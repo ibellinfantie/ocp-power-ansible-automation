@@ -1,7 +1,7 @@
 ---
 ansible-navigator:
   execution-environment:
-    image: 192.168.100.101/ee-openstacksdk:latest
+    image: xxx.xxx.xxx.xxx/ee-openstacksdk:latest
     pull:
       policy: missing
   playbook-artifact:
